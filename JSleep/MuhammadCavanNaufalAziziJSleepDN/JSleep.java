@@ -3,7 +3,8 @@ package MuhammadCavanNaufalAziziJSleepDN;
 public class JSleep
 {
     
-    public static float persendis, hargadiskon, harga_awal, persen_admin_fee, admin_fee, result;
+    public float persendis, hargadiskon, harga_awal, persen_admin_fee, admin_fee, result;
+    
     public static void main(String[] args) {
 
         JSleep hotel = new JSleep();
@@ -35,9 +36,9 @@ public class JSleep
     public float getDiscountPercentage(int beforeDiscount, int afterDiscount) 
     {   
         if(beforeDiscount > afterDiscount){
-            persendis = 100;
+            persendis = 0.0f;
         }else{
-            persendis = (float) ((beforeDiscount - afterDiscount) / beforeDiscount);
+            persendis = (float)(beforeDiscount - afterDiscount) / beforeDiscount;
         }
         return persendis;
     }
@@ -47,14 +48,14 @@ public class JSleep
         if(discountPercentage > 100.0f){
             hargadiskon = 100.0f;
         }else{
-            hargadiskon = (float) (price - (price * (discountPercentage/100.0f)));
+            hargadiskon = (price - (price * (discountPercentage/100.0f)));
         }
         return hargadiskon;
     }
     
     public float getOriginalPrice(int discountedPrice, float discountPercentage)
     {   
-        harga_awal = (float) (discountedPrice /  (100.0f - discountPercentage));
+        harga_awal = (discountedPrice /  (1 - discountPercentage));
         return harga_awal;
     }
     
