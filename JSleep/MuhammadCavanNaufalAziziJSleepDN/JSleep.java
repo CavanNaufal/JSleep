@@ -2,23 +2,25 @@ package MuhammadCavanNaufalAziziJSleepDN;
 
 public class JSleep
 {
-    public JSleep(){
-
-    }
-
-
     public static void main(String[] args) {
 
-        JSleep hotel = new JSleep();
-        System.out.println("Nama Hotel : " + hotel.getHotelName());
-        System.out.println("ID Hotel : " + hotel.getHotelId());
-        System.out.println("is Discount : " + hotel.isDiscount());
-        System.out.println("Persentase Diskon : " + hotel.getDiscountPercentage(0, 0));
-        System.out.println("Harga Diskon : " + hotel.getDiscountedPrice(0, 0));
-        System.out.println("Harga Awal : " + hotel.getOriginalPrice(0, 0));
-        System.out.println("Persentase Biaya Admin : " + hotel.getAdminFeePercentage());
-        System.out.println("Biaya Admin : " + hotel.getAdminFee(0));
-        System.out.println("Harga Total : " + hotel.getTotalPrice(0, 0));
+        //JSleep hotel = new JSleep();
+        
+        //System.out.println("Nama Hotel : " + hotel.getHotelName());
+        //System.out.println("ID Hotel : " + hotel.getHotelId());
+        //System.out.println("is Discount : " + hotel.isDiscount());
+        //System.out.println("Persentase Diskon : " + hotel.getDiscountPercentage(0, 0));
+        //System.out.println("Harga Diskon : " + hotel.getDiscountedPrice(0, 0));
+        //System.out.println("Harga Awal : " + hotel.getOriginalPrice(0, 0));
+        //System.out.println("Persentase Biaya Admin : " + hotel.getAdminFeePercentage());
+        //System.out.println("Biaya Admin : " + hotel.getAdminFee(0));
+        //System.out.println("Harga Total : " + hotel.getTotalPrice(0, 0));
+        
+        Room hotel = JSleep.createRoom();
+        System.out.println(hotel.name);
+        System.out.println(hotel.size);
+        System.out.println(hotel.price.price);
+        System.out.println(hotel.facility);
     }
 
 
@@ -86,7 +88,12 @@ public class JSleep
         result = price * numberOfNight + getAdminFee(price * numberOfNight);
         return result;
     }
-
+    
+    public static Room createRoom(){
+        Price price = new Price (100000.0, 5);
+        Room room = new Room ("hotel", 30, price, Facility.AC);
+        return room;
+    }
 
 }
 
