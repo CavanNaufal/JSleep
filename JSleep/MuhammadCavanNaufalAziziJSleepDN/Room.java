@@ -10,7 +10,7 @@ package MuhammadCavanNaufalAziziJSleepDN;
 public class Room
 {
     // instance variables - replace the example below with your own
-    public static int size;
+    public int size;
     public String name;
     public Facility facility;
     public Price price;

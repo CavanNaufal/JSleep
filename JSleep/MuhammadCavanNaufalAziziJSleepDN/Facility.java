@@ -1,15 +1,16 @@
 package MuhammadCavanNaufalAziziJSleepDN;
 
 public enum Facility{ 
-        WiFi, 
-        Bathtub, 
-        Balcony, 
-        AC, 
-        FitnessCenter, 
-        Refrigerator, 
-        Restaurant, 
-        SwimmingaPool
+    WiFi, 
+    Bathtub, 
+    Balcony, 
+    AC, 
+    FitnessCenter, 
+    Refrigerator, 
+    Restaurant, 
+    SwimmingPool
 }
+
 
 
 

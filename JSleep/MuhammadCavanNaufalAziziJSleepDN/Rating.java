@@ -10,36 +10,36 @@ public class Rating
     public Rating()
     {
         // initialise instance variables
-        total = 0;
-        count = 0;
+        this.total = 0;
+        this.count = 0;
     }
 
 
     public void insert(int rating)
     {
         // put your code here
-        total += rating;
-        count++;
+        this.total += rating;
+        this.count++;
     }
     
     public long getCount()
     {
         // put your code here
-        return count;
+        return this.count;
     }
     
     public long getTotal()
     {
         // put your code here
-        return total;
+        return this.total;
     }
     
     public double getAverage()
     {
         // put your code here
-        if (count == 0){
-            return 0;
+        if (this.count == 0){
+            return 0.0;
         }
-        return total / count;
+        return this.total / this.count;
     }
 }
