@@ -2,7 +2,7 @@ package MuhammadCavanNaufalAziziJSleepDN;
 
 public class JSleep
 {
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Room hotel = JSleep.createRoom();
         
         System.out.println(hotel.name);
@@ -16,6 +16,5 @@ public class JSleep
         Room room = new Room ("hotel", 30, price, Facility.AC);
         return room;
     }
-
 }
 

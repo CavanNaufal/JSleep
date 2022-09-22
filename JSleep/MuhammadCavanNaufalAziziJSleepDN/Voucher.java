@@ -35,7 +35,7 @@ public class Voucher
             if(this.cut > 100){
                 this.cut = 100;
             }
-            return price.price * (100 - this.cut / 100);
+            return price.price * (100 - this.cut) / 100;
         }else{
             if(this.cut > price.price){
                 this.cut = price.price;

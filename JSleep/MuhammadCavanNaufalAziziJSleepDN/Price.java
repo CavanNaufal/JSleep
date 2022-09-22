@@ -1,6 +1,5 @@
 package MuhammadCavanNaufalAziziJSleepDN;
 
-
 public class Price
 {
     // instance variables - replace the example below with your own
@@ -52,8 +51,7 @@ public class Price
     {
         // put your code here
         if (this.rebate > this.price){
-            this.price = this.rebate;
-            return this.price;
+            this.rebate = this.price;
         }
         return this.price - this.rebate;
     }
