@@ -1,6 +1,7 @@
 package MuhammadCavanNaufalAziziJSleepDN;
 
-public class Voucher
+
+public class Voucher extends Serializable
 {
     // instance variables - replace the example below with your own
     private boolean used;
@@ -9,15 +10,16 @@ public class Voucher
     public String name;
     public int code;
     
-    public Voucher(String name, int code, Type type, double minimum, double cut)
+    public Voucher(int id, String name, int code, Type type, boolean used, double minimum, double cut)
     {
         // initialise instance variables
+        super(id);
         this.name = name;
         this.code = code;
         this.type = type;
+        this.used = false;
         this.minimum = minimum;
         this.cut = cut;
-        this.used = false;
     }
 
     public boolean canApply(Price price)

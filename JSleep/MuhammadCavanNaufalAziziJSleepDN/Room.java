@@ -1,13 +1,7 @@
 package MuhammadCavanNaufalAziziJSleepDN;
 
 
-/**
- * Write a description of class Room here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
-public class Room
+public class Room extends Serializable
 {
     // instance variables - replace the example below with your own
     public int size;
@@ -15,8 +9,9 @@ public class Room
     public Facility facility;
     public Price price;
 
-    public Room (String name, int size, Price price, Facility facility)
+    public Room (int id, String name, int size, Price price, Facility facility)
     {
+        super(id);
         this.name = name;
         this.size = size;
         this.price = price;

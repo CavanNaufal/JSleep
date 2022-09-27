@@ -1,20 +1,19 @@
 package MuhammadCavanNaufalAziziJSleepDN;
 
+/**
+ * Write a description of class Payment here.
+ *
+ * @author (Muhammad Cavan Naufal Azizi)
+ * @version (a version number or a date)
+ */
+
 public class JSleep
 {
     public static void main(String[] args){
-        Room hotel = JSleep.createRoom();
-        
-        System.out.println(hotel.name);
-        System.out.println(hotel.size);
-        System.out.println(hotel.price.price);
-        System.out.println(hotel.facility);
-    }
-    
-    public static Room createRoom(){
-        Price price = new Price (100000.0, 5);
-        Room room = new Room ("hotel", 30, price, Facility.AC);
-        return room;
+    Payment testRoom = new Payment (1, 1, 1, "", 1, "", "");
+    Invoice testInvoice = new Invoice(2,2,2, "");
+    System.out.println(testRoom.print());
+    System.out.println(testInvoice.print());
     }
 }
 
