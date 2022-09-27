@@ -1,7 +1,7 @@
 package MuhammadCavanNaufalAziziJSleepDN;
 
 /**
- * Write a description of class Payment here.
+ * Write a description of class JSleep here.
  *
  * @author (Muhammad Cavan Naufal Azizi)
  * @version (a version number or a date)
