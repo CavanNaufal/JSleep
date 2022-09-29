@@ -3,9 +3,25 @@ package MuhammadCavanNaufalAziziJSleepDN;
 
 public class Invoice extends Serializable
 {
+    public enum RoomRating
+    {
+        NONE,
+        BAD,
+        NEUTRAL,
+        GOOD
+    }
+    
+    public enum PaymentStatus
+    { 
+        FAILED,
+        WAITING,
+        SUCCESS
+    }
     // instance variables - replace the example below with your own
     public int buyerId, renterId;
     public String time;
+    public PaymentStatus status;
+    public RoomRating rating;
 
     protected Invoice(int id, int buyerId, int renterId, String time)
     {
@@ -13,6 +29,8 @@ public class Invoice extends Serializable
        this.buyerId = buyerId;
        this.renterId = renterId;
        this.time = time;
+       this.rating = RoomRating.NONE;
+       this.status = PaymentStatus.WAITING;
     }
     
     public Invoice(int id, Account buyer, Renter renter, String time)
@@ -21,6 +39,8 @@ public class Invoice extends Serializable
        this.buyerId = buyer.id;
        this.renterId = renter.id;
        this.time = time;
+       this.rating = RoomRating.NONE;
+       this.status = PaymentStatus.WAITING;
     }
 
     public String print()
