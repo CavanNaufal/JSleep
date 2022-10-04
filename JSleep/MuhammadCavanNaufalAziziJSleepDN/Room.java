@@ -1,7 +1,7 @@
 package MuhammadCavanNaufalAziziJSleepDN;
 
 
-public class Room extends Serializable
+public class Room extends Serializable implements FileParser
 {
     // instance variables - replace the example below with your own
     public int size;
@@ -32,5 +32,15 @@ public class Room extends Serializable
         "\nFacility : " + facility + 
         "\nCity : " + city + 
         "\nAddress : " + address + "\n";
+    }
+    
+    public Object write()
+    {
+        return null;
+    }
+    
+    public boolean read(String content)
+    {
+        return false;
     }
 }

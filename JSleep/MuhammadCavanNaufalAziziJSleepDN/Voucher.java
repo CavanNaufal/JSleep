@@ -1,7 +1,7 @@
 package MuhammadCavanNaufalAziziJSleepDN;
 
 
-public class Voucher extends Serializable
+public class Voucher extends Serializable implements FileParser
 {
     // instance variables - replace the example below with your own
     private boolean used;
@@ -49,5 +49,15 @@ public class Voucher extends Serializable
     public boolean isUsed()
     {
         return this.used;
+    }
+    
+    public Object write()
+    {
+        return null;
+    }
+    
+    public boolean read(String content)
+    {
+        return false;
     }
 }

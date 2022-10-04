@@ -1,26 +1,40 @@
 package MuhammadCavanNaufalAziziJSleepDN;
-
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 public class Payment extends Invoice
 {
     // instance variables - replace the example below with your own
-    public String to, from;
+    public Calendar to, from;
     private int roomId;
     
-    public Payment(int id, int buyerId, int renterId, String time, int roomId, String from, String to)
+    public Payment(int id, int buyerId, int renterId, int roomId)
     {
-        super(id, buyerId, renterId, time);
+        super(id, buyerId, renterId);
         this.roomId = roomId;
-        this.from = from;
-        this.to = to;
+        this.from = Calendar.getInstance();
+        this.to = Calendar.getInstance();
+        this.to.add(Calendar.DATE, 2);
     }
     
-    public Payment(int id, Account buyer, Renter renter, String time, int roomId, String from, String to)
+    public Payment(int id, Account buyer, Renter renter, int roomId)
     {
-        super(id, buyer, renter, time);
+        super(id, buyer, renter);
         this.roomId = roomId;
-        this.from = from;
-        this.to = to;
+        this.from = Calendar.getInstance();
+        this.to = Calendar.getInstance();
+        this.to.add(Calendar.DATE, 2);
+    }
+    
+    public String getDuration()
+    {
+        SimpleDateFormat SDFormat = new SimpleDateFormat("dd MMMM yyyy");
+        return SDFormat.format(from.getTime()) + " - " + SDFormat.format(to.getTime());
+    }
+    
+    public String getTime()
+    {
+        return new SimpleDateFormat("'Formatted Date = 'dd MMMM yyyy").format(time.getTime());
     }
 
     public String print()
@@ -32,4 +46,6 @@ public class Payment extends Invoice
     {
         return roomId;
     }
+    
+
 }

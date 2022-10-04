@@ -1,6 +1,6 @@
 package MuhammadCavanNaufalAziziJSleepDN;
 
-public class Account extends Serializable
+public class Account extends Serializable implements FileParser
 {
     // instance variables - replace the example below with your own
     public String name, email, password;
@@ -15,5 +15,15 @@ public class Account extends Serializable
     public String toString()
     {
         return "**** Account ****\n" + "ID : " + id + "\nName Account : " + name + "\nEmail : " + email + "\nPassword : " + password + "\n";
+    }
+    
+    public Object write()
+    {
+        return null;
+    }
+    
+    public boolean read(String content)
+    {
+        return false;
     }
 }
