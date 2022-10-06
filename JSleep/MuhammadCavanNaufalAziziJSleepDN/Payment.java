@@ -1,35 +1,42 @@
 package MuhammadCavanNaufalAziziJSleepDN;
 import java.util.Calendar;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class Payment extends Invoice
 {
     // instance variables - replace the example below with your own
-    public Calendar to, from;
+    public Date to, from;
     private int roomId;
     
-    public Payment(int id, int buyerId, int renterId, int roomId)
+    public Payment(int id, int buyerId, int renterId, int roomId, Date from, Date to)
     {
         super(id, buyerId, renterId);
         this.roomId = roomId;
-        this.from = Calendar.getInstance();
-        this.to = Calendar.getInstance();
-        this.to.add(Calendar.DATE, 2);
+        this.from = new Date();
+        this.to = new Date();
     }
     
-    public Payment(int id, Account buyer, Renter renter, int roomId)
+    public Payment(int id, Account buyer, Renter renter, int roomId, Date from, Date to)
     {
         super(id, buyer, renter);
         this.roomId = roomId;
-        this.from = Calendar.getInstance();
-        this.to = Calendar.getInstance();
-        this.to.add(Calendar.DATE, 2);
+        this.from = new Date();
+        this.to = new Date();
     }
     
-    public String getDuration()
+    public static boolean makeBooking(Date from, Date to, Room room)
     {
-        SimpleDateFormat SDFormat = new SimpleDateFormat("dd MMMM yyyy");
-        return SDFormat.format(from.getTime()) + " - " + SDFormat.format(to.getTime());
+        if(availability(from, to, room))
+        {
+            room.booked.add(from);
+            room.booked.add(to);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     
     public String getTime()
@@ -47,5 +54,27 @@ public class Payment extends Invoice
         return roomId;
     }
     
+    public static boolean availability(Date from,Date to,Room room)
+    {   
+        if(room.booked.isEmpty())
+        {
+            return true;
+        }
+        else if(from.compareTo(to) > 0)
+        {
+            return false;
+        }
+        else
+        {
+            for(int i = 0; i < room.booked.size(); i++)
+            {
+                if(room.booked.get(i).compareTo(from) == 0 || room.booked.get(i).compareTo(to) == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
 
 }
