@@ -54,7 +54,7 @@ public class Payment extends Invoice
         return roomId;
     }
     
-    public static boolean availability(Date from,Date to,Room room)
+    public static boolean availability(Date from, Date to, Room room)
     {   
         if(room.booked.isEmpty())
         {
