@@ -13,16 +13,16 @@ public class Payment extends Invoice
     {
         super(id, buyerId, renterId);
         this.roomId = roomId;
-        this.from = new Date();
-        this.to = new Date();
+        this.from = from;
+        this.to = to;
     }
     
     public Payment(int id, Account buyer, Renter renter, int roomId, Date from, Date to)
     {
         super(id, buyer, renter);
         this.roomId = roomId;
-        this.from = new Date();
-        this.to = new Date();
+        this.from = from;
+        this.to = to;
     }
     
     public static boolean makeBooking(Date from, Date to, Room room)
