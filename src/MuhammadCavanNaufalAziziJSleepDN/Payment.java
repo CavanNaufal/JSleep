@@ -2,6 +2,7 @@ package MuhammadCavanNaufalAziziJSleepDN;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 public class Payment extends Invoice
 {
@@ -68,7 +69,7 @@ public class Payment extends Invoice
         {
             for(int i = 0; i < room.booked.size(); i++)
             {
-                if(room.booked.get(i).compareTo(from) == 0 || room.booked.get(i).compareTo(to) == 0)
+                if(room.booked.get(i).compareTo(from) == 0 || room.booked.get(i).compareTo(to) - 1 == 0)
                 {
                     return false;
                 }
