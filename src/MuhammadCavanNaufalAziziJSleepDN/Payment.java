@@ -2,7 +2,6 @@ package MuhammadCavanNaufalAziziJSleepDN;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 
 public class Payment extends Invoice
 {
@@ -28,16 +27,19 @@ public class Payment extends Invoice
     
     public static boolean makeBooking(Date from, Date to, Room room)
     {
+        Calendar tempDate = Calendar.getInstance();
         if(availability(from, to, room))
         {
-            room.booked.add(from);
-            room.booked.add(to);
+            while(from.before(to))
+            {
+                room.booked.add(from);
+                tempDate.setTime(from);
+                tempDate.add(Calendar.DATE, 1);
+                from = tempDate.getTime();
+            }
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
     
     public String getTime()
@@ -57,25 +59,25 @@ public class Payment extends Invoice
     
     public static boolean availability(Date from, Date to, Room room)
     {   
-        if(room.booked.isEmpty())
-        {
-            return true;
-        }
-        else if(from.compareTo(to) > 0)
+        if(from.compareTo(to) > 0 || from.equals(to))
         {
             return false;
         }
-        else
+
+        for(Date i : room.booked)
         {
-            for(int i = 0; i < room.booked.size(); i++)
+            if(from.equals(i))
             {
-                if(room.booked.get(i).compareTo(from) == 0 || room.booked.get(i).compareTo(to) - 1 == 0)
+                return false;
+            }
+            else if (from.before(i))
+            {
+                if(from.before(i) && to.after(i))
                 {
                     return false;
                 }
             }
-            return true;
         }
+        return true;
     }
-
 }
