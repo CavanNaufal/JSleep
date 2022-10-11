@@ -5,8 +5,8 @@ public class Account extends Serializable implements FileParser
     // instance variables - replace the example below with your own
     public String name, email, password;
     
-    public Account (int id, String name, String email, String password){
-        super(id);
+    public Account (String name, String email, String password){
+        super();
         this.name = name;
         this.email = email;
         this.password = password;

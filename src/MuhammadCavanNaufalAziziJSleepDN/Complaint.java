@@ -15,9 +15,9 @@ public class Complaint extends Serializable
     /**
      * Constructor for objects of class Complaint
      */
-    public Complaint(int id, String date, String desc)
+    public Complaint(String date, String desc)
     {
-        super(id);
+        super();
         this.date = date;
         this.desc = desc;
     }

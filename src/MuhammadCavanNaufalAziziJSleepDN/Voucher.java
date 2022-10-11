@@ -10,10 +10,10 @@ public class Voucher extends Serializable implements FileParser
     public String name;
     public int code;
     
-    public Voucher(int id, String name, int code, Type type, boolean used, double minimum, double cut)
+    public Voucher(String name, int code, Type type, boolean used, double minimum, double cut)
     {
         // initialise instance variables
-        super(id);
+        super();
         this.name = name;
         this.code = code;
         this.type = type;
