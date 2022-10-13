@@ -20,7 +20,6 @@ public class Serializable
         {
             tempId = 0;
         }
-
         this.id = tempId;
         mapCounter.put(this.getClass(), id);
     }

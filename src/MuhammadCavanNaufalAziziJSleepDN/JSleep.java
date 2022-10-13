@@ -44,7 +44,8 @@ public class JSleep
 //        System.out.println(Payment.makeBooking(start4, end4, RoomA));
     }
 
-    public static Room createRoom(){
+    public static Room createRoom()
+    {
         Price price = new Price (100000, 0.5);
         Room room = new Room("Hotel", 30, price, Facility.AC, City.DEPOK, "Jalan Margonda Raya");
         return room;
