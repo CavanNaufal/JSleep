@@ -181,17 +181,20 @@ public class Algorithm{
 
     public static <T> List<T> Paginate(Iterator<T> iterator, int page, int pageSize, Predicate<T> pred)
     {
-        List<T> list = new ArrayList<>();
-        int i = 0, begin = pageSize * page, last = begin + pageSize - 1;
-
-        while (iterator.hasNext()) {
-            T current = iterator.next();
-            if (i <= last && pred.predicate(current)) {
-                list.add(current);
-            }
-            i = i + 1;
+        int occurences = 0;
+        int startingIdx = page * pageSize;
+        List<T> pageList = new ArrayList<>(pageSize);
+        while (iterator.hasNext() && occurences < startingIdx) {
+            T obj = iterator.next();
+            if (pred.predicate(obj))
+                ++occurences;
         }
-        return list;
+        while (iterator.hasNext() && pageList.size() < pageSize) {
+            T obj = iterator.next();
+            if (pred.predicate(obj))
+                pageList.add(obj);
+        }
+        return pageList;
     }
 
     public static <T> List<T> Paginate(Iterable<T> iterable, int page, int pageSize, Predicate<T> pred)
