@@ -4,31 +4,14 @@ package MuhammadCavanNaufalAziziJSleepDN;
 public class Renter extends Serializable
 {
     // instance variables - replace the example below with your own
-    public int phoneNumber = 0;
-    public String address = "";
+    public String phoneNumber;
+    public String address;
     public String username;
 
-    public Renter(String username)
-    {
-        super();
-        this.username = username;
-    }
+    public static final String REGEX_NAME = "^[A-Z][a-zA-Z0-9_]{4,20}$";
+    public static final String REGEX_PHONE = "^[0-9]{9,12}$";
     
-    public Renter(String username, String address)
-    {
-        super();
-        this.username = username;
-        this.address = address;
-    }
-    
-    public Renter(String username, int phoneNumber)
-    {
-        super();
-        this.username = username;
-        this.phoneNumber = phoneNumber;
-    }
-    
-    public Renter(String username, int phoneNumber, String address)
+    public Renter(String username, String phoneNumber, String address)
     {
         super();
         this.username = username;
@@ -36,4 +19,8 @@ public class Renter extends Serializable
         this.address = address;
     }
 
+    public boolean validate()
+    {
+        return username.matches(REGEX_NAME) && phoneNumber.matches(REGEX_PHONE);
+    }
 }

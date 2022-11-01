@@ -2,10 +2,10 @@ package MuhammadCavanNaufalAziziJSleepDN;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Room extends Serializable implements FileParser
+public class Room extends Serializable
 {
     // instance variables - replace the example below with your own
-    public int size;
+    public int size, accountId;
     public String name, address;
     public Facility facility;
     public Price price;
@@ -13,11 +13,12 @@ public class Room extends Serializable implements FileParser
     public City city;
     public ArrayList<Date> booked = new ArrayList<>();
     
-    public Room (String name, int size, Price price, Facility facility, City city, String address)
+    public Room (int accountId, String name, int size, Price price, Facility facility, City city, String address)
     {
         super();
         this.name = name;
         this.size = size;
+        this.accountId = accountId;
         this.price = price;
         this.facility = facility;
         this.city = city;
@@ -27,15 +28,16 @@ public class Room extends Serializable implements FileParser
     
     public String toString()
     {
-        return "**** Room ****" +
-        "\nName Room : " + name +
-        "\nSize : " + size +
-        "\n" + price +
-        "\nFacility : " + facility +
-        "\nCity : " + city +
-        "\nAddress : " + address +
-        "\nId : " + id +
-        "\n";
+        return  "**** Room ****" +
+                "\nName Room : " + name +
+                "\nBed Type : " + bedType +
+                "\nSize : " + size +
+                "\n" + price +
+                "\nFacility : " + facility +
+                "\nCity : " + city +
+                "\nAddress : " + address +
+                "\nId : " + id +
+                "\n";
     }
     
     public Object write()

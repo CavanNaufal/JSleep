@@ -34,6 +34,11 @@ public class Serializable
         return tempId.id == id;
     }
 
+    public int compareTo(Serializable tempId)
+    {
+        return Integer.compare(this.id, tempId.id);
+    }
+
     public static <T> Integer getClosingId(Class<T> getId)
     {
         return mapCounter.get(getId);
