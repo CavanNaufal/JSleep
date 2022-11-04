@@ -2,50 +2,38 @@ package MuhammadCavanNaufalAziziJSleepDN;
 
 import java.util.HashMap;
 
-public class Serializable
-{
-    // instance variables - replace the example below with your own
+public class Serializable {
     public final int id;
-    private static HashMap<Class <?>, Integer> mapCounter = new HashMap<>();
-    
-    protected Serializable()
-    {
-        Integer tempId;
-        if(mapCounter.containsKey(this.getClass()))
-        {
-            tempId = mapCounter.get(this.getClass());
-            tempId += 1;
+    private static HashMap<Class<?>, Integer> mapCounter = new HashMap<Class<?>, Integer>();
+
+    protected Serializable() {
+        Integer counter = mapCounter.get(getClass());
+        if (counter == null){
+            counter =  0;
         }
-        else
-        {
-            tempId = 0;
+        else{
+            counter +=1;
         }
-        this.id = tempId;
-        mapCounter.put(this.getClass(), id);
+        mapCounter.put(getClass(), counter);
+        this.id = counter;
     }
 
-    public boolean equals(Object temp)
+    public static <T extends Serializable> Integer setClosingId(Class<T> clazz, int id) { return mapCounter.put(clazz, id); }
+
+    public static <T extends Serializable> Integer getClosingId(Class<T> clazz) { return mapCounter.get(clazz); }
+
+    public boolean equals(Object other)
     {
-        return (temp instanceof Serializable && ((Serializable) temp).id == this.id);
+        return other instanceof Serializable && ((Serializable) other).id == id;
     }
 
-    public boolean equals(Serializable tempId)
+    public boolean equals(Serializable other)
     {
-        return tempId.id == id;
+        return other.id == id;
     }
 
-    public int compareTo(Serializable tempId)
+    public int compareTo(Serializable other)
     {
-        return Integer.compare(this.id, tempId.id);
-    }
-
-    public static <T> Integer getClosingId(Class<T> getId)
-    {
-        return mapCounter.get(getId);
-    }
-
-    public static <T> Integer setClosingId(Class<T> setId, int number)
-    {
-        return mapCounter.replace(setId, number);
+        return Integer.compare(this.id, other.id);
     }
 }

@@ -24,29 +24,31 @@ public class JSleep
     }
     public static void main(String[] args)
     {
-        Renter testRegex = new Renter("Netlab_", "081234567890", "Jl. Margonda Raya");
-        Renter testRegexFail = new Renter("netlab", "081", "Jalan");
-        System.out.println(testRegex.validate());
-        System.out.println(testRegexFail.validate());
-
         try
         {
-            String filepath = "D:\\Universitas Indonesia\\Semester 3\\OOP\\Praktikum\\JSleep\\src\\json\\randomRoomList.json";
+            String filepath = "D:\\Universitas Indonesia\\Semester 3\\OOP\\Praktikum\\JSleep\\src\\json\\account.json";
 
-            JsonTable<Room> tableRoom = new JsonTable<>(Room.class, filepath);
-            List<Room> filterTableRoom = filterByCity(tableRoom, "jakarta", 0, 5);
-            filterTableRoom.forEach(room -> System.out.println(room.toString()));
+            JsonTable<Account> tableAccount = new JsonTable<>(Account.class, filepath);
+            tableAccount.add(new Account("name", "email", "password"));
+            tableAccount.writeJson();
+
+            tableAccount = new JsonTable<>(Account.class, filepath);
+            tableAccount.forEach(account -> System.out.println(account.toString()));
         }
         catch (Throwable t)
         {
             t.printStackTrace();
         }
+
+        for(int i = 0; i < 10; i++)
+        {
+            ThreadingObject thread = new ThreadingObject("Thread " + i);
+        }
     }
 
     public static Room createRoom(){
         Price price = new Price (100000, 5);
-        Room room = new Room(1, "hotel", 2, price, Facility.AC, City.DEPOK, "Jaya");
-        return room;
+        return new Room(1, "hotel", 2, price, Facility.AC, City.DEPOK, "Jaya");
     }
 
     public static List<Room> filterByCity(List<Room> list, String search, int page, int pageSize)
@@ -64,31 +66,28 @@ public class JSleep
 
     public static List<Room> filterByPrice(List<Room> list, double minPrice, double maxPrice)
     {
-        List<Room> resultByPrice = new ArrayList<>();
+        List<Room> result = new ArrayList<>();
         for (Room room : list)
         {
             if (room.price.price >= minPrice && room.price.price <= maxPrice)
             {
-                resultByPrice.add(room);
+                result.add(room);
             }
         }
-        return resultByPrice;
+        return result.subList(0, Math.min(5, result.size()));
     }
 
     public static List<Room> filterByAccountId(List<Room> list, int accountId, int page, int pageSize)
     {
-        List<Room> resultByAccountId = new ArrayList<>();
-        int start = page * pageSize;
-        int end = start + pageSize;
-        for (int i = start; i < end; i++)
+        List<Room> result = new ArrayList<>();
+        for (Room room : list)
         {
-            Room room = list.get(i);
             if (room.accountId == accountId)
             {
-                resultByAccountId.add(room);
+                result.add(room);
             }
         }
-        return resultByAccountId;
+        return result.subList(page * pageSize, Math.min((page + 1) * pageSize, result.size()));
     }
 }
 
