@@ -31,8 +31,6 @@ public class JSleep
             JsonTable<Account> tableAccount = new JsonTable<>(Account.class, filepath);
             tableAccount.add(new Account("name", "email", "password"));
             tableAccount.writeJson();
-
-            tableAccount = new JsonTable<>(Account.class, filepath);
             tableAccount.forEach(account -> System.out.println(account.toString()));
         }
         catch (Throwable t)
