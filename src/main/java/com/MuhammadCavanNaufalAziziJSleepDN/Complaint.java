@@ -1,6 +1,8 @@
 package com.MuhammadCavanNaufalAziziJSleepDN;
 
 
+import com.MuhammadCavanNaufalAziziJSleepDN.dbjson.Serializable;
+
 /**
  * Write a description of class Complaint here.
  *

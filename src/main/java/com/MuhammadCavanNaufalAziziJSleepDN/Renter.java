@@ -1,6 +1,8 @@
 package com.MuhammadCavanNaufalAziziJSleepDN;
 
 
+import com.MuhammadCavanNaufalAziziJSleepDN.dbjson.Serializable;
+
 public class Renter extends Serializable
 {
     // instance variables - replace the example below with your own

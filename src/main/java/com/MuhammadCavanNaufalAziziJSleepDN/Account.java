@@ -1,9 +1,13 @@
 package com.MuhammadCavanNaufalAziziJSleepDN;
 
+import com.MuhammadCavanNaufalAziziJSleepDN.dbjson.Serializable;
+
 public class Account extends Serializable
 {
     // instance variables - replace the example below with your own
     public String name, email, password;
+    public Renter renter;
+    public double balance;
 
     public static final String REGEX_EMAIL = "^\\w+@\\w+([\\.-]?\\w+)*.?\\w+$";
     public static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d](?=\\S+$).{8,}$";
@@ -12,7 +16,7 @@ public class Account extends Serializable
         super();
         this.name = name;
         this.email = email;
-        this.password = password;
+        this.password = this.password;
     }
     
     public String toString()

@@ -1,6 +1,10 @@
 package com.MuhammadCavanNaufalAziziJSleepDN;
 
 
+import com.MuhammadCavanNaufalAziziJSleepDN.Price;
+import com.MuhammadCavanNaufalAziziJSleepDN.Type;
+import com.MuhammadCavanNaufalAziziJSleepDN.dbjson.Serializable;
+
 public class Voucher extends Serializable
 {
     // instance variables - replace the example below with your own
