@@ -1,7 +1,9 @@
 package com.MuhammadCavanNaufalAziziJSleepDN.controller;
 
 import com.MuhammadCavanNaufalAziziJSleepDN.Account;
+import com.MuhammadCavanNaufalAziziJSleepDN.Algorithm;
 import com.MuhammadCavanNaufalAziziJSleepDN.Renter;
+import com.MuhammadCavanNaufalAziziJSleepDN.Room;
 import com.MuhammadCavanNaufalAziziJSleepDN.dbjson.JsonAutowired;
 import com.MuhammadCavanNaufalAziziJSleepDN.dbjson.JsonTable;
 import  java.util.regex.*;
@@ -14,10 +16,10 @@ public class AccountController implements BasicGetController<Account>
 {
     public static final String REGEX_EMAIL = "^\\w+@\\w+([\\.-]?\\w+)*.?\\w+$";
     public static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
-    public static final String REGEX_PATTERN_EMAIL = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$";
-    public static final String REGEX_PATTERN_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
+    public static final Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
+	public static final Pattern REGEX_PATTERN_PASSWORD = Pattern.compile(REGEX_PASSWORD);
 
-    @JsonAutowired(value = Account.class, filepath = "src/json/account.json")
+    @JsonAutowired(filepath = "account.json", value = Account.class)
     public static JsonTable<Account> accountTable;
 
     @Override
@@ -27,21 +29,24 @@ public class AccountController implements BasicGetController<Account>
     }
 
     @PostMapping("/register")
-    public Account register
-            (
-                    @RequestParam String name,
-                    @RequestParam String email,
-                    @RequestParam String password
-            )
-    {
-        return null;
+    public Account register( @RequestParam String name, @RequestParam String email, @RequestParam String password) {
+        password = Algorithm.getMd5(password);
+        for (Account account : accountTable){
+            if(account.email.equals(email) || (name.isBlank()) || account.validate()){
+                return null;
+            }
+        }
+        return new Account(name, email, password);
     }
+
     @PostMapping("/login")
     public Account login
-            ( @RequestParam String email,
-              @RequestParam String password
+            (
+                @RequestParam String email,
+                @RequestParam String password
             )
     {
+        password = Algorithm.getMd5(password);
         for (Account account : getJsonTable()) {
             if (account.email.equals(email) && account.password.equals(password)) {
                 return account;
@@ -54,19 +59,34 @@ public class AccountController implements BasicGetController<Account>
     @PostMapping("/{id}/registerRenter")
     public Renter registerRenter
             (
-             @RequestParam String username,
-             @RequestParam  String address,
-             @RequestParam String phoneNumber,
-             @PathVariable String id) {
-        return null;
+                @RequestParam int id,
+                @RequestParam String username,
+                @RequestParam  String address,
+                @RequestParam String phoneNumber,
+                @PathVariable String email, 
+                @PathVariable String password
+            )
+        {
+            for (Account account : accountTable) {
+                if (account.id == id) {
+                    Renter renter = new Renter(username, address, phoneNumber);
+                    account.renter = renter;
+                    return renter;
+                }
+            }
+            return null;
 
-    }
+        }
 
     @PostMapping("/{id}/topUp")
-    public boolean topUp (
-            @RequestParam double balance,
-            @PathVariable String id) {
+    public boolean topUp
+    (
+        @RequestParam int id,
+        @RequestParam double balance,
+        @PathVariable String email, 
+        @PathVariable String password
+    ) 
+    {
         return false;
-
     }
 }

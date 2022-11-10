@@ -42,11 +42,7 @@ public class Payment extends Invoice
         }
         return false;
     }
-    
-    public String getTime()
-    {
-        return new SimpleDateFormat("'Formatted Date = 'dd MMMM yyyy").format(time.getTime());
-    }
+
 
     public String print()
     {

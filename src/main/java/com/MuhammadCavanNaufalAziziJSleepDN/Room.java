@@ -15,7 +15,8 @@ public class Room extends Serializable
     public BedType bedType;
     public City city;
     public ArrayList<Date> booked = new ArrayList<>();
-    
+    public Renter renter;
+
     public Room (int accountId, String name, int size, Price price, Facility facility, City city, String address)
     {
         super();
@@ -28,7 +29,10 @@ public class Room extends Serializable
         this.address = address;
         this.bedType = BedType.SINGLE;
     }
-    
+
+    public Room(String name, int size, int price, Facility facility, City city, String address) {
+    }
+
     public String toString()
     {
         return  "**** Room ****" +

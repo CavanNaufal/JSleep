@@ -18,7 +18,7 @@ import org.springframework.boot.SpringApplication;
 public class JSleep {
     public static void main(String[] args) {
 
-        JsonDBEngine.run(JSleep.class);
+        JsonDBEngine.Run(JSleep.class);
         SpringApplication.run(JSleep.class, args);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> JsonDBEngine.join()));
     }

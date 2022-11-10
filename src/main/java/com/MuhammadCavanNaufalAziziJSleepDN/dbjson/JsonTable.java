@@ -54,4 +54,5 @@ public class JsonTable<T> extends Vector<T> {
         final JsonReader reader = new JsonReader(new FileReader(filepath));
         return gson.fromJson(reader, clazz);
     }
+
 }

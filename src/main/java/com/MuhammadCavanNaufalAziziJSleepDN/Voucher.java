@@ -7,6 +7,8 @@ import com.MuhammadCavanNaufalAziziJSleepDN.dbjson.Serializable;
 
 public class Voucher extends Serializable
 {
+    public boolean isUsed;
+    public int price;
     // instance variables - replace the example below with your own
     private boolean used;
     public double cut, minimum;
