@@ -135,43 +135,31 @@ public class Algorithm{
         return false;
     }
 
-    public static <T> T find(T[] array, Predicate<T> pred)
-    {
+    public static <T> T find(T[] array, Predicate<T> pred) {
         final Iterator<T> it = Arrays.stream(array).iterator();
         return find(it, pred);
     }
-
-    public static <T> T find(Iterable<T> iterable, Predicate<T> pred)
-    {
+    public static <T> T find(Iterable<T> iterable, Predicate<T> pred) {
         final Iterator<T> it = iterable.iterator();
         return find(it, pred);
     }
-
-    public static <T> T find(T[] array, T value)
-    {
+    public static <T> T find(T[] array, T value) {
         final Iterator<T> it = Arrays.stream(array).iterator();
         return find(it, value);
     }
-
-    public static <T> T find(Iterable<T> iterable, T value)
-    {
+    public static <T> T find(Iterable<T> iterable, T value) {
         final Iterator<T> it = iterable.iterator();
         return find(it, value);
     }
-
-    public static <T> T find(Iterator<T> iterator, T value)
-    {
+    public static <T> T find(Iterator<T> iterator, T value) {
         final Predicate<T> pred = value::equals;
         return find(iterator, pred);
     }
-
-    public static <T> T find(Iterator<T> iterator, Predicate<T> pred)
-    {
-        while (iterator.hasNext())
-        {
-            T current = iterator.next();
-            if (pred.predicate(current))
-                return current;
+    public static <T> T find(Iterator<T> iterator, Predicate<T> pred) {
+        while (iterator.hasNext()) {
+            T tmp = iterator.next();
+            if (pred.predicate(tmp))
+                return tmp;
         }
         return null;
     }

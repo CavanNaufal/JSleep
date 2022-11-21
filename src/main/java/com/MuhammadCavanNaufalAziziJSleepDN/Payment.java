@@ -10,7 +10,7 @@ public class Payment extends Invoice
     public Date from;
     private int roomId;
 
-    public Payment(int id, int buyerId, int renterId, int roomId, Date from, Date to)
+    public Payment(int buyerId, int renterId, int roomId, Date from, Date to)
     {
         super(buyerId, renterId);
         this.roomId = roomId;
@@ -18,7 +18,7 @@ public class Payment extends Invoice
         this.to = to;
     }
 
-    public Payment(int id, Account buyer, Renter renter, int roomId, Date from, Date to)
+    public Payment(Account buyer, Renter renter, int roomId, Date from, Date to)
     {
         super(buyer, renter);
         this.roomId = roomId;
@@ -46,21 +46,24 @@ public class Payment extends Invoice
         return false;
     }
 
-    public static boolean availability (Date from, Date to, Room room)
-    {
-        Calendar start = Calendar.getInstance();
-        start.setTime(from);
-        Calendar end = Calendar.getInstance();
-        end.setTime(to);
-        if(start.after(end) || start.equals(end)){
+    public static boolean availability(Date from,Date to,Room room){
+
+        if(to.compareTo(from) < 0 || to.compareTo(from) == 0){
             return false;
         }
-        for (Date date = start.getTime(); start.before(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
-            if(room.booked.contains(date)){
-                return false;
+        else{
+            for(Date inc : room.booked){
+                if (from.equals(inc)){
+                    return false;
+                }
+                else if(from.before(inc)){
+                    if(from.before(inc) && to.after(inc)){
+                        return false;
+                    }
+                }
             }
+            return true;
         }
-        return true;
     }
 
     public String print()

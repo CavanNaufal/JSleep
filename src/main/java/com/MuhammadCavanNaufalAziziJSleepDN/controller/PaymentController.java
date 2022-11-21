@@ -8,59 +8,71 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/payment")
-public class PaymentController implements BasicGetController<Payment> {
-    @JsonAutowired
-            (value = Payment.class, filepath = "/Users/rijal/Documents/OOPLOCAL/Praktikum/BlueJ/Praktikum-JSleep/src/json/payment.json")
+public class PaymentController implements BasicGetController<Payment>{
+    @JsonAutowired(filepath = "payment.json", value = Payment.class)
     public static JsonTable<Payment> paymentTable;
 
-    public JsonTable<Payment> getJsonTable() {
+    @Override
+    @GetMapping("/account")
+    public JsonTable<Payment> getJsonTable(){
         return paymentTable;
     }
 
     @PostMapping("/create")
-    public Payment create(@RequestParam int buyerId, @RequestParam int renterId, @RequestParam int roomId, @RequestParam String from, @RequestParam String to) throws ParseException {
-        Account acc = Algorithm.<Account>find(AccountController.accountTable, pred -> pred.id == buyerId && pred.id == buyerId);
-        Room room = Algorithm.<Room>find(RoomController.roomTable, pred -> pred.id == roomId && pred.accountId == roomId);
-
-        // Price price = new Price(room.price.price);
-        double price = room.price.price;
-
+    public Payment create( @RequestParam int buyerId, @RequestParam int renterId, @RequestParam int roomId,  @RequestParam String from,@RequestParam String to){
+        Room roomCheck = Algorithm.<Room>find(RoomController.roomTable, room -> room.id == roomId);
+        Account accountCheck = Algorithm.<Account>find(AccountController.accountTable, acc -> acc.id == buyerId);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date fromDate = sdf.parse(from);
-        Date toDate = sdf.parse(to);
-
-        if(acc.balance >= price && acc != null && room != null  ){
-            Payment payment = new Payment(acc.id, buyerId, renterId, roomId, fromDate, toDate);
-            acc.balance -= price;
-            payment.status=Invoice.PaymentStatus.WAITING;
-            payment.makeBooking(fromDate, toDate, room);
-            paymentTable.add(payment);
-            return payment;
+        try {
+            Date fromTgl = sdf.parse(from);
+            Date toTgl = sdf.parse(to);
+            long day = toTgl.getTime() - fromTgl.getTime();
+            double totalPrice = roomCheck.price.price * (TimeUnit.MILLISECONDS.toDays(day));
+            if(roomCheck != null || accountCheck != null && totalPrice <= accountCheck.balance && Payment.availability(fromTgl, toTgl, roomCheck)){
+                Payment paid = new Payment(buyerId, renterId, roomId, fromTgl, toTgl);
+                accountCheck.balance -= totalPrice;
+                paid.status = Invoice.PaymentStatus.WAITING;
+                Payment.makeBooking(fromTgl, toTgl, roomCheck);
+                paymentTable.add(paid);
+                return paid;
+            }else{
+                return null;
+            }
+        } catch (ParseException p) {
+            p.printStackTrace();
         }
         return null;
     }
+
     @PostMapping("/{id}/accept")
-    public boolean accept(@RequestParam int id) {
-        Payment payment = Algorithm.<Payment>find(paymentTable, pred -> pred.id == id);
-        if (payment != null && payment.status == Invoice.PaymentStatus.WAITING) {
-            payment.status = Invoice.PaymentStatus.SUCCESS;
+    boolean accept(@PathVariable int id){
+        Payment payCheck = Algorithm.<Payment>find(paymentTable, payment -> payment.id == id);
+        if (Invoice.PaymentStatus.WAITING.toString().equals("WAITING") && payCheck != null ) {
+            payCheck.status = Invoice.PaymentStatus.SUCCESS;
             return true;
+        }else {
+            return false;
         }
-        return false;
     }
+
     @PostMapping("/{id}/cancel")
-    public boolean cancel(@RequestParam int id) {
-        Payment payment = Algorithm.<Payment>find(paymentTable, pred -> pred.id == id);
-        if (payment != null && payment.status == Invoice.PaymentStatus.WAITING) {
-            payment.status = Invoice.PaymentStatus.FAILED;
-            Account acc = Algorithm.<Account>find(AccountController.accountTable, pred -> pred.id == payment.buyerId);
-            Room room = Algorithm.<Room>find(RoomController.roomTable, pred -> pred.id == payment.renterId);
-            acc.balance += room.price.price;
+    boolean cancel(@PathVariable int id){
+
+        Payment payCheck = Algorithm.<Payment>find(paymentTable, payment -> payment.id == id);
+        Account accountCheck = Algorithm.<Account>find(AccountController.accountTable, account -> account.id == payCheck.buyerId);
+        Room roomCheck = Algorithm.<Room>find(RoomController.roomTable, room -> room.id == payCheck.getRoomId());
+
+        if (payCheck != null && Invoice.PaymentStatus.WAITING.toString().equals("WAITING")) {
+            payCheck.status = Invoice.PaymentStatus.FAILED;
+            accountCheck.balance += roomCheck.price.price;
             return true;
+        }else{
+            return false;
         }
-        return false;
     }
 }
