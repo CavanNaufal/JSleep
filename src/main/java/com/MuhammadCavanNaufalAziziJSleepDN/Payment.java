@@ -6,69 +6,81 @@ import java.text.SimpleDateFormat;
 
 public class Payment extends Invoice
 {
-    public Date to;
-    public Date from;
+    public Date to, from;
     private int roomId;
+
 
     public Payment(int buyerId, int renterId, int roomId, Date from, Date to)
     {
         super(buyerId, renterId);
+        this.to = new Date(to.getTime());
+        this.from = new Date(from.getTime());
         this.roomId = roomId;
-        this.from = from;
-        this.to = to;
     }
 
     public Payment(Account buyer, Renter renter, int roomId, Date from, Date to)
     {
         super(buyer, renter);
+        this.to = new Date(to.getTime());
+        this.from = new Date(from.getTime());
         this.roomId = roomId;
-        this.from = from;
-        this.to = to;
     }
 
-    public int getRoomId()
+    public Payment(int id, int buyerId, int renterId, int roomId, Date dateFrom, Date dateTo) {
+        super(buyerId, renterId);
+        this.to = new Date(dateTo.getTime());
+        this.from = new Date(dateFrom.getTime());
+        this.roomId = roomId;
+    }
+
+
+    public static boolean availability(Date from, Date to, Room room)
     {
-        return this.roomId;
+        if(from.after(to) ||to.before(from)||from.equals(to))
+        {
+            return false;
+        }
+        for(Date i: room.booked)
+        {
+            if (from.equals(i)){
+                return false;
+            }
+            else if(from.before(i) && to.after(i))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static boolean makeBooking(Date from, Date to, Room room)
     {
-        if(availability(from, to, room)){
-            Calendar start = Calendar.getInstance();
-            start.setTime(from);
-            Calendar end = Calendar.getInstance();
-            end.setTime(to);
-            for (Date date = start.getTime(); start.before(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
-                room.booked.add(date);
+        if(availability(from,to,room))
+        {
+            while(from.before(to))
+            {
+                room.booked.add(from);
+                Calendar c = Calendar.getInstance();
+                c.setTime(from);
+                c.add(Calendar.DATE,1);
+                from = c.getTime();
             }
             return true;
         }
-        return false;
-    }
-
-    public static boolean availability(Date from,Date to,Room room){
-
-        if(to.compareTo(from) < 0 || to.compareTo(from) == 0){
+        else
+        {
             return false;
         }
-        else{
-            for(Date inc : room.booked){
-                if (from.equals(inc)){
-                    return false;
-                }
-                else if(from.before(inc)){
-                    if(from.before(inc) && to.after(inc)){
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
+
     }
 
     public String print()
     {
-        return "\nRoom Id: " + this.roomId + "\nFrom: " + this.from + "\nTo: " + this.to;
+        return "Room ID: " + roomId + "\nFrom: " + from + "\nTo: " + to;
     }
 
+    public int getRoomId()
+    {
+        return roomId;
+    }
 }
