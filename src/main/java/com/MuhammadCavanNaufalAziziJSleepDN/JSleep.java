@@ -35,11 +35,5 @@ public class JSleep {
     public static List<Room> filterByAccountId(List<Room> list, int accountId, int page, int pageSize){
         return Algorithm.Paginate(list, page,pageSize,room -> room.accountId == accountId);
     }
-    public static Room createRoom() {
-        // public Room(int id, String name, int size, Price price, Facility facility, City city, String address)
-        Price price = new Price(100000, 0.5);
-        Room room = new Room(10, "Hotel", 30, price, Facility.AC, City.DEPOK, "Jalan Margonda Raya");
-        return room;
-    }
 }
 

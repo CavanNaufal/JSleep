@@ -10,28 +10,28 @@ public class Room extends Serializable
     // instance variables - replace the example below with your own
     public int size, accountId;
     public String name, address;
-    public Facility facility;
+    public ArrayList<Facility> facility;
     public Price price;
     public BedType bedType;
     public City city;
-    public ArrayList<Date> booked = new ArrayList<>();
+    public ArrayList<Date> booked;
+
     public Renter renter;
 
-    public Room (int accountId, String name, int size, Price price, Facility facility, City city, String address)
+    public Room (int accountId, String name, int size, Price price, ArrayList<Facility> facility, City city, String address, BedType bedType)
     {
         super();
         this.name = name;
         this.size = size;
         this.accountId = accountId;
         this.price = price;
-        this.facility = facility;
+        this.facility = new ArrayList<>(facility);
         this.city = city;
         this.address = address;
-        this.bedType = BedType.SINGLE;
+        this.bedType = bedType;
+        this.booked = new ArrayList<>();
     }
 
-    public Room(String name, int size, int price, Facility facility, City city, String address) {
-    }
 
     public String toString()
     {

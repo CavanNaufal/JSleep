@@ -11,6 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class implements the BasicGetController interface and provides methods
+ * to check the availability and validity of vouchers.
+ *
+ * @see BasicGetController
+ * @see Voucher
+ */
+
 @RestController
 @RequestMapping("/voucher")
 public class VoucherController implements BasicGetController<Voucher> {

@@ -12,6 +12,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * This is the AccountController class.
+ * It implements the BasicGetController interface and provides methods for logging
+ * in, registering, and managing user accounts.
+ *
+ * @author Muhammad Cavan Naufal Azizi
+ */
+
 @RestController
 @RequestMapping("/account")
 public class AccountController implements BasicGetController<Account> {
@@ -76,13 +85,13 @@ public class AccountController implements BasicGetController<Account> {
         }
     }
     @PostMapping("/{id}/registerRenter")
-    Renter registerRenter (@RequestParam int id,
+    Renter registerRenter (@PathVariable int id,
                            @RequestParam String username,
                            @RequestParam  String address,
                            @RequestParam String phoneNumber) {
         for (Account account : getJsonTable()) {
             if (account.id == id && account.renter == null) {
-                Renter renter = new Renter (username, address, phoneNumber);
+                Renter renter = new Renter (username, phoneNumber, address);
                 account.renter = renter;
                 return renter;
             }
@@ -92,7 +101,7 @@ public class AccountController implements BasicGetController<Account> {
     }
 
     @PostMapping("/{id}/topUp")
-    boolean topUp (@RequestParam int id, @RequestParam double balance) {
+    boolean topUp (@PathVariable int id, @RequestParam double balance) {
         Account found = Algorithm.<Account>find(getJsonTable(), acc -> acc.id == id);
         if(found != null){
             found.balance += balance;

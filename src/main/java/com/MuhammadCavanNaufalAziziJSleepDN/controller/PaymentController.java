@@ -11,6 +11,14 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ * The PaymentController class implements the BasicGetController interface.
+ * It contains methods to create, accept and cancel a payment.
+ *
+ * @version 1.0
+ * @since [LAST CHANGED DATE]
+ */
 @RestController
 @RequestMapping("/payment")
 public class PaymentController implements BasicGetController<Payment> {

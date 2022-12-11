@@ -8,6 +8,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * The `RoomController` class provides REST API endpoints for managing rooms.
+
+ * It uses the `JsonAutowired` annotation to read a `Room` object from a JSON file,
+ * and it implements the `BasicGetController` interface to provide a `getJsonTable` method.
+
+ * The `index` method provides a basic message for the root URL of the API.
+
+ * The `getRoomByRenter` method returns a paginated list of rooms that are rented by a specific renter,
+ * as identified by their `accountId`.
+
+ * The `create` method allows a renter to create a new room, provided they have a valid `accountId`
+ * and have already registered as a renter.
+
+ * The `getAllRoom` method returns a paginated list of all rooms in the system.
+ */
+
 @RestController
 @RequestMapping("/room")
 public class RoomController implements BasicGetController<Room>{
@@ -41,16 +59,22 @@ public class RoomController implements BasicGetController<Room>{
             @RequestParam String name,
             @RequestParam int size,
             @RequestParam int price,
-            @RequestParam Facility facility,
+            @RequestParam ArrayList<Facility> facility,
             @RequestParam City city,
-            @RequestParam String address
+            @RequestParam String address,
+            @RequestParam BedType bedType
     ){
         Account account = Algorithm.<Account>find(AccountController.accountTable, pred -> pred.id == accountId && pred.renter != null);
         if(account == null) return null;
         else{
-            Room room = new Room(accountId, name, size, new Price(price), facility, city, address);
+            Room room = new Room(accountId, name, size, new Price(price), facility, city, address, bedType);
             roomTable.add(room);
             return room;
         }
+    }
+
+    @GetMapping("/getAllRoom")
+    public List<Room> getAllRoom(@RequestParam int page, @RequestParam int pageSize){
+        return Algorithm.<Room>Paginate(getJsonTable(), page, pageSize, pred -> true);
     }
 }
