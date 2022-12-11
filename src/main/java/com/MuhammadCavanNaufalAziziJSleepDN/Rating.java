@@ -1,5 +1,10 @@
 package com.MuhammadCavanNaufalAziziJSleepDN;
 
+
+/**
+ * The Rating class represents a rating for something,
+ * such as a product or service.
+ */
 public class Rating
 {
     // instance variables - replace the example below with your own

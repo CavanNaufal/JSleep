@@ -37,6 +37,13 @@ public class AccountController implements BasicGetController<Account> {
         return accountTable;
     }
 
+    /**
+     * Attempts to log in the user with the given email and password.
+     *
+     * @param email the email address of the user
+     * @param password the password of the user
+     * @return the Account object for the logged in user, or null if the login failed
+     */
     @PostMapping("/login")
     Account login( @RequestParam String email, @RequestParam String password) {
         try {
@@ -59,6 +66,14 @@ public class AccountController implements BasicGetController<Account> {
         return null;
     }
 
+    /**
+     * Handles registration requests.
+     *
+     * @param name the name of the user
+     * @param email the email address of the user
+     * @param password the password for the user's account
+     * @return the newly created Account object, or null if the registration failed
+     */
     @PostMapping("/register")
     Account register( @RequestParam String name, @RequestParam String email, @RequestParam String password) {
         boolean findEmail = REGEX_PATTERN_EMAIL.matcher(email).find();
@@ -84,6 +99,16 @@ public class AccountController implements BasicGetController<Account> {
             return null;
         }
     }
+
+    /**
+     * Registers a new renter for the specified account.
+     *
+     * @param id the ID of the account to register the renter for
+     * @param username the username for the new renter
+     * @param address the address for the new renter
+     * @param phoneNumber the phone number for the new renter
+     * @return the registered renter, or null if the account could not be found or already has a renter
+     */
     @PostMapping("/{id}/registerRenter")
     Renter registerRenter (@PathVariable int id,
                            @RequestParam String username,
@@ -100,6 +125,13 @@ public class AccountController implements BasicGetController<Account> {
 
     }
 
+    /**
+     * Adds a specified amount to the balance of an account with the given ID.
+     *
+     * @param id The ID of the account to add the balance to
+     * @param balance The amount of money to add to the account's balance
+     * @return true if the balance was successfully added, false if no account was found with the given ID
+     */
     @PostMapping("/{id}/topUp")
     boolean topUp (@PathVariable int id, @RequestParam double balance) {
         Account found = Algorithm.<Account>find(getJsonTable(), acc -> acc.id == id);

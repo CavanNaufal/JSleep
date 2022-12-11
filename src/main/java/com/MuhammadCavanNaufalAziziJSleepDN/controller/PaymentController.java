@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
  * It contains methods to create, accept and cancel a payment.
  *
  * @version 1.0
- * @since [LAST CHANGED DATE]
  */
 @RestController
 @RequestMapping("/payment")
@@ -31,6 +30,12 @@ public class PaymentController implements BasicGetController<Payment> {
         return paymentTable;
     }
 
+    /**
+     * Cancels a payment with the given ID.
+     *
+     * @param id the ID of the payment to cancel
+     * @return true if the payment was successfully cancelled, false otherwise
+     */
     @PostMapping("/{id}/cancel")
     public boolean cancel(
             @PathVariable int id
@@ -46,40 +51,57 @@ public class PaymentController implements BasicGetController<Payment> {
         return false;
     }
 
+    /**
+     * Accepts a payment with a given ID.
+     *
+     * @param id the ID of the payment to accept
+     * @return true if the payment was accepted successfully, false otherwise
+     */
     @PostMapping("/{id}/accept")
-    public boolean accept (
-            @PathVariable int id) {
-        Payment payment = Algorithm.<Payment>find(paymentTable, pred -> pred.id == id);
-        if (payment != null && payment.status == Invoice.PaymentStatus.WAITING) {
-            payment.status = Invoice.PaymentStatus.SUCCESS;
+    boolean accept(@PathVariable int id){
+        Payment payCheck = Algorithm.<Payment>find(paymentTable, payment -> payment.id == id);
+        if (Invoice.PaymentStatus.WAITING.toString().equals("WAITING") && payCheck != null ) {
+            payCheck.status = Invoice.PaymentStatus.SUCCESS;
             return true;
+        }else {
+            return false;
         }
-        return false;
     }
 
+
+    /**
+     * Creates a new Payment object.
+     *
+     * @param buyerId the ID of the buyer
+     * @param renterId the ID of the renter
+     * @param roomId the ID of the room
+     * @param from the date the payment is being made from
+     * @param to the date the payment is being made to
+     * @return the created Payment object, or null if the payment could not be made
+     */
     @PostMapping("/create")
-    public Payment create (
-            @RequestParam int buyerId,
-            @RequestParam int renterId,
-            @RequestParam int roomId,
-            @RequestParam String from,
-            @RequestParam String to) throws ParseException {
-        Account acc = Algorithm.<Account>find(AccountController.accountTable, pred -> pred.id == buyerId);
-        Room room = Algorithm.<Room>find(RoomController.roomTable, temp -> temp.id == roomId);
-//        if (acc == null || room == null) return null;
-        double price = room.price.price;
-
+    public Payment create( @RequestParam int buyerId, @RequestParam int renterId, @RequestParam int roomId,  @RequestParam String from,@RequestParam String to){
+        Room roomCheck = Algorithm.<Room>find(RoomController.roomTable, room -> room.id == roomId);
+        Account accountCheck = Algorithm.<Account>find(AccountController.accountTable, acc -> acc.id == buyerId);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateFrom = sdf.parse(from);
-        Date dateTo = sdf.parse(to);
-
-        if(acc.balance >= price){
-            Payment payment = new Payment(acc.id, buyerId, renterId, roomId, dateFrom, dateTo);
-            acc.balance -= price;
-            payment.status=Invoice.PaymentStatus.WAITING;
-            Payment.makeBooking(dateFrom, dateTo, room);
-            paymentTable.add(payment);
-            return payment;
+        try {
+            Date fromTgl = sdf.parse(from);
+            Date toTgl = sdf.parse(to);
+            long day = toTgl.getTime() - fromTgl.getTime();
+            double totalPay = roomCheck.price.price * (TimeUnit.MILLISECONDS.toDays(day));
+            if(accountCheck != null && roomCheck != null && totalPay <= accountCheck.balance && Payment.availability(fromTgl, toTgl, roomCheck)){
+                Payment paid = new Payment(buyerId, renterId, roomId, fromTgl, toTgl);
+                accountCheck.balance -= totalPay;
+                paid.totalPrice = totalPay;
+                paid.status = Invoice.PaymentStatus.WAITING;
+                Payment.makeBooking(fromTgl, toTgl, roomCheck);
+                paymentTable.add(paid);
+                return paid;
+            }else{
+                return null;
+            }
+        } catch (ParseException p) {
+            p.printStackTrace();
         }
         return null;
     }

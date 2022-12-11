@@ -7,7 +7,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Iterator;
 
+/**
+ * This class contains a collection of methods for working with Iterators, Iterables, and arrays.
+ * The methods allow for filtering, counting, and collecting elements that match a given condition.
+ */
 public class Algorithm{
+    /**
+     * Private constructor to prevent instantiation of this class.
+     * All methods in this class are static and should be called directly.
+     */
     private Algorithm(){}
 
     public static <T> List<T> collect(Iterable<T> iterable, T value)

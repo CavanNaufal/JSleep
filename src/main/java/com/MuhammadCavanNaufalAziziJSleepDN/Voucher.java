@@ -5,6 +5,11 @@ import com.MuhammadCavanNaufalAziziJSleepDN.Price;
 import com.MuhammadCavanNaufalAziziJSleepDN.Type;
 import com.MuhammadCavanNaufalAziziJSleepDN.dbjson.Serializable;
 
+/**
+ * This class represents a voucher. It can be used to apply discounts or deductions to a price.
+ * The voucher has a name, code, type, and a minimum value that it can be applied to. It also
+ * tracks whether it has been used or not.
+ */
 public class Voucher extends Serializable
 {
     public boolean isUsed;

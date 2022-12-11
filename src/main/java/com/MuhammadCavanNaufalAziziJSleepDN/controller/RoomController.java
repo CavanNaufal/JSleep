@@ -42,6 +42,16 @@ public class RoomController implements BasicGetController<Room>{
         return roomTable;
     }
 
+    /**
+     * Returns a list of rooms rented by the renter with the specified ID.
+     * The rooms are paginated, with each page containing the specified number
+     * of rooms.
+     *
+     * @param id The ID of the renter.
+     * @param page The page number to return.
+     * @param pageSize The number of rooms per page.
+     * @return A list of rooms rented by the specified renter.
+     */
     @GetMapping("/{id}/renter")
     List<Room> getRoomByRenter
             (
@@ -53,6 +63,20 @@ public class RoomController implements BasicGetController<Room>{
         return Algorithm.Paginate(getJsonTable(), page, pageSize, pred -> pred.accountId == id);
     }
 
+    /**
+     * Creates a new room and adds it to the room table.
+     *
+     * @param accountId The ID of the account that will be associated with the room.
+     * @param name The name of the room.
+     * @param size The size of the room, in square meters.
+     * @param price The price of the room per night.
+     * @param facility The list of facilities available in the room.
+     * @param city The city where the room is located.
+     * @param address The address of the room.
+     * @param bedType The type of bed in the room.
+     *
+     * @return The newly created room, or null if no account with the specified ID exists.
+     */
     @PostMapping("/create")
     public Room create(
             @RequestParam int accountId,
@@ -73,6 +97,13 @@ public class RoomController implements BasicGetController<Room>{
         }
     }
 
+    /**
+     * Retrieves a paginated list of all rooms in the database.
+     *
+     * @param page the page number to retrieve
+     * @param pageSize the number of items per page
+     * @return a paginated list of all rooms
+     */
     @GetMapping("/getAllRoom")
     public List<Room> getAllRoom(@RequestParam int page, @RequestParam int pageSize){
         return Algorithm.<Room>Paginate(getJsonTable(), page, pageSize, pred -> true);

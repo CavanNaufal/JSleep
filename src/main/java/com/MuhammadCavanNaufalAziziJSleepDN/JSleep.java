@@ -8,8 +8,7 @@ import org.springframework.boot.SpringApplication;
 
 
 /**
- * Write a description of class JSleep here.
- *
+ * JSleep is a class that contains static methods for filtering a list of rooms by city, price, and account ID.
  * @author (Muhammad Cavan Naufal Azizi)
  * @version (a version number or a date)
  */

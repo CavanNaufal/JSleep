@@ -3,6 +3,9 @@ package com.MuhammadCavanNaufalAziziJSleepDN;
 
 import com.MuhammadCavanNaufalAziziJSleepDN.dbjson.Serializable;
 
+/**
+ * The `Renter` class represents a renter in a rental system.
+ */
 public class Renter extends Serializable
 {
     // instance variables - replace the example below with your own

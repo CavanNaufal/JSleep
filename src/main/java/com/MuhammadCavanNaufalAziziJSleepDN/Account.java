@@ -2,6 +2,12 @@ package com.MuhammadCavanNaufalAziziJSleepDN;
 
 import com.MuhammadCavanNaufalAziziJSleepDN.dbjson.Serializable;
 
+/**
+ * The `Account` class represents a user account. It contains information
+ * such as the user's name, email, password, and balance. The `Account`
+ * class also provides methods for validating the email and password, and
+ * for generating a string representation of the account.
+ */
 public class Account extends Serializable
 {
     // instance variables - replace the example below with your own
@@ -18,11 +24,22 @@ public class Account extends Serializable
         this.email = email;
         this.password = password;
     }
-    
+
+    /**
+     * Returns a string representation of the `Account` object.
+     *
+     * @return a string representation of the `Account` object
+     */
     public String toString()
     {
         return "***** Account *****\n" + "ID : " + id + "\nName Account : " + name + "\nEmail : " + email + "\nPassword : " + password + "\n";
     }
+
+    /**
+     * Validates the email and password for the `Account` object.
+     *
+     * @return `true` if the email and password are valid, `false` otherwise
+     */
     
     public boolean validate()
     {

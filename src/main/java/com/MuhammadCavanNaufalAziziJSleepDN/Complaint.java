@@ -3,12 +3,7 @@ package com.MuhammadCavanNaufalAziziJSleepDN;
 
 import com.MuhammadCavanNaufalAziziJSleepDN.dbjson.Serializable;
 
-/**
- * Write a description of class Complaint here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
+
 public class Complaint extends Serializable
 {
     // instance variables - replace the example below with your own

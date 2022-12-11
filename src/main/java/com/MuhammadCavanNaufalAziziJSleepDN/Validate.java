@@ -2,10 +2,7 @@ package com.MuhammadCavanNaufalAziziJSleepDN;
 import java.util.ArrayList;
 
 /**
- * Write a description of class Validate here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * The Validate class provides a method for filtering a list of prices based on a specified value.
  */
 public class Validate
 {
